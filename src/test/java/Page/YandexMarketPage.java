@@ -1,6 +1,7 @@
 package Page;
 
 
+import model.LaptopModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +9,12 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Test
@@ -38,6 +43,16 @@ public class YandexMarketPage {
     private WebElement BlackColor;
     @FindBy(xpath = "//*[@id=\"search-prepack\"]//fieldset[@data-autotest-id='13887626']//label[@for='13887626_13887686']")
     private WebElement WhiteColor;
+    @FindBy(xpath = "//div[@data-id][1]/div[4]/div[1]/div[1]/a")
+    private WebElement firstLaptopLink;
+    @FindBy(xpath = "//a[text()='по цене']")
+    private WebElement sortButton;
+    @FindBy(xpath = "//div[contains(@class, 'n-filter-sorter_sort_asc')]")
+    private List<WebElement> minSortButton;
+    @FindBy(xpath = "//div[contains(@class, 'n-filter-sorter_sort_desc')]")
+    private List<WebElement> maxSortButton;
+    @FindBy(xpath = "//div[@class='pager-more__button pager-loader_preload']")
+    private WebElement showMoreButton;
 
 
     public void clickCompTech() {
@@ -65,6 +80,20 @@ public class YandexMarketPage {
         HP.click();
     }
 
+    public void minSort() {
+        if(minSortButton.size() > 0){
+            return;
+        }
+        sortButton.click();
+    }
+
+    public void maxSort() {
+        if(maxSortButton.size() > 0){
+            return;
+        }
+        sortButton.click();
+    }
+
     public void clickLenovo() {
         Lenovo.click();
     }
@@ -78,19 +107,24 @@ public class YandexMarketPage {
         if (WhiteColor.isEnabled() || WhiteColor.isDisplayed())
             WhiteColor.click();
     }
-    public  int getAndSortLaptops(){
-       List<WebElement> laptopList = driver.findElements(By.xpath("//div[@class='n-filter-applied-results__content preloadable i-bem preloadable_js_inited']/div/div"));
-//       laptopList.sort(new Comparator<WebElement>() {
-//           @Override
-//           public int compare(WebElement o1, WebElement o2) {
-//               return o1.
-//           }
-//       });
-        return 1;
 
-
+    public void clickFirstLaptopLink() {
+        if (WhiteColor.isEnabled() || WhiteColor.isDisplayed())
+        firstLaptopLink.click();
     }
 
+    public void showAllLaptops() throws InterruptedException {
+        while (driver.findElements(By.xpath("//span[text()='Показать еще']/parent::*[contains(@class, 'button_disabled_yes')]")).size() < 1) {
+            while(driver.findElements(By.xpath("//div[contains(@class, 'spin_progress_yes')]")).size() > 0){
+                Thread.sleep(1000);
+            }
+            if(driver.findElements(By.xpath("//a[@class='button button_size_m button_theme_pseudo i-bem button_js_inited button_disabled_yes']")).size() > 0){
+                break;
+            }
+            showMoreButton.click();
+        }
+
+    }
 
 }
 

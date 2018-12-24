@@ -1,8 +1,10 @@
 package base;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -10,7 +12,7 @@ import org.testng.annotations.Parameters;
 public class BaseSetup {
 
     protected WebDriver driver;
-    static String driverPath = "C:\\Users\\Kate\\Downloads\\chromedriver_win32\\chromedriver.exe";
+    static String driverPath = "H:\\personal_projects\\Stuff\\chromedriver_win32\\chromedriver.exe";
 
     public WebDriver getDriver() {
         return driver;
@@ -50,6 +52,15 @@ public class BaseSetup {
         } catch (Exception e) {
             System.out.println("Error….." + e.getStackTrace());
         }
+    }
+
+    public void waitLoadPage() {
+        new WebDriverWait(driver, 2).until(
+                webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+    }
+
+    public void reloadPage() {
+        driver.navigate().refresh();
     }
 
 }

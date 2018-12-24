@@ -1,25 +1,26 @@
 package Tests;
 
-import Page.YandexMarketPage;
-import base.BaseSetup;
-import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 import Step.YandexMarketStep;
+import org.testng.annotations.Test;
+
+
 @Test
 public class YandexTest {
 
     private YandexMarketStep yandexMarketStep;
 
 
-    public void testYandexMarketTechCategory(){
+    public void testYandexMarketTechCategory() throws InterruptedException {
         yandexMarketStep = new YandexMarketStep("chrome","https://market.yandex.ru/");
 
         yandexMarketStep.goToLaptop();
-        yandexMarketStep.setPriceTo("30000");
+        yandexMarketStep.setPriceTo("18000");
         yandexMarketStep.checkProducer();
         yandexMarketStep.checkColor();
-        yandexMarketStep.minPriceLaptop();
-
+        yandexMarketStep.waitLoadPage();
+        yandexMarketStep.getAndSortLaptops();
+        yandexMarketStep.pringMinMaxAndDifference();
+        yandexMarketStep.getBatteryInfo();
+        yandexMarketStep.printPopup();
     }
 }
