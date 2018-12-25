@@ -3,10 +3,12 @@ package Step;
 import Page.LaptopPage;
 import Page.YandexMarketPage;
 import base.BaseSetup;
+import io.qameta.allure.Step;
 import javafx.util.Pair;
 import model.LaptopBatteryModel;
 import model.LaptopModel;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -28,15 +30,21 @@ public class YandexMarketStep extends BaseSetup {
         driver.navigate().to(url);
     }
 
+    public YandexMarketStep(WebDriver driver) {
+        super();
+    }
+
+    @Step("ujhfjhtycfjhfj")
     public void goToLaptop() {
         yandexMarketPage.clickCompTech();
         yandexMarketPage.clickComp();
         yandexMarketPage.clickLaptop();
 
     }
-    public void setPriceTo(String strPriceTo){
+    @Step(" mhhoihhl opju kug {strPriceTo}")
+    public YandexMarketStep setPriceTo(String strPriceTo){
         yandexMarketPage.setPriceTo(strPriceTo);
-
+        return  new YandexMarketStep(driver);
     }
     public  void  checkProducer(){
         yandexMarketPage.clickHP();
@@ -86,7 +94,7 @@ public class YandexMarketStep extends BaseSetup {
     }
 
     public void getAndSortLaptops() throws InterruptedException {
-        reloadPage();
+       // reloadPage();
        // yandexMarketPage.showAllLaptops();
         List<LaptopModel> laptopModels = new ArrayList<>();
         Integer laptopListSize = driver.findElements(By.xpath("//div[@data-id]")).size();

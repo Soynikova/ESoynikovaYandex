@@ -27,6 +27,7 @@ public class YandexMarketPage {
         this.driver = driver;
     }
 
+
     @FindBy(xpath = "//html/body/div[1]/div/div[3]/noindex/div/div[4]/a")
     private WebElement CompTech;
     @FindBy(xpath = "//a[@class='_2qvOOvezty SvBTI5gwNn _2EJs7HYaZ4'][contains(text(),'Компьютеры')]")

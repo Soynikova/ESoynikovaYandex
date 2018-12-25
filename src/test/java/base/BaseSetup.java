@@ -12,7 +12,7 @@ import org.testng.annotations.Parameters;
 public class BaseSetup {
 
     protected WebDriver driver;
-    static String driverPath = "H:\\personal_projects\\Stuff\\chromedriver_win32\\chromedriver.exe";
+    static String driverPath = "C:\\Users\\Tech\\Desktop\\chromedriver_win32\\chromedriver_win32\\chromedriver.exe";
 
     public WebDriver getDriver() {
         return driver;
@@ -37,6 +37,7 @@ public class BaseSetup {
         System.out.println("Launching google chrome with new profile..");
         System.setProperty("webdriver.chrome.driver", driverPath);
         WebDriver driver = new ChromeDriver();
+
         return driver;
     }
 
