@@ -33,6 +33,7 @@ public class LaptopPage {
 
     public Integer getBatterySpecSize() {
         return driver.findElements(By.xpath("//h2[text()='Питание']/following-sibling::*")).size();
+
     }
 
     public void printPopup() {
