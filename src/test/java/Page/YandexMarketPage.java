@@ -1,7 +1,6 @@
 package Page;
 
 
-import model.LaptopModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,12 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Test

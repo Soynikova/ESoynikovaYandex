@@ -5,6 +5,7 @@ import Page.YandexMarketPage;
 import base.BaseSetup;
 import io.qameta.allure.Step;
 import javafx.util.Pair;
+import model.BatteryModel;
 import model.LaptopBatteryModel;
 import model.LaptopModel;
 import org.openqa.selenium.By;
@@ -122,6 +123,18 @@ public class YandexMarketStep extends BaseSetup {
         }
         LaptopBatteryModel battery = new LaptopBatteryModel(specs);
         System.out.println();
+    }
+    public void getbattetyASPIRE(){
+        driver.get("https://market.yandex.ru/product--noutbuk-acer-aspire-3-a315-21/1800488111/spec?track=tabs");
+        laptopPage.goToSpecTab();
+        BatteryModel batteryModel = new BatteryModel(
+
+        );
+
+
+
+
+
     }
 
     public void printPopup() {
