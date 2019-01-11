@@ -10,6 +10,7 @@ import model.LaptopBatteryModel;
 import model.LaptopModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,21 +32,19 @@ public class YandexMarketStep extends BaseSetup {
         driver.navigate().to(url);
     }
 
-    public YandexMarketStep(WebDriver driver) {
-        super();
-    }
 
-    @Step("ujhfjhtycfjhfj")
+
     public void goToLaptop() {
         yandexMarketPage.clickCompTech();
         yandexMarketPage.clickComp();
         yandexMarketPage.clickLaptop();
 
     }
-    @Step(" mhhoihhl opju kug {strPriceTo}")
-    public YandexMarketStep setPriceTo(String strPriceTo){
+
+
+    public void  setPriceTo(String strPriceTo){
         yandexMarketPage.setPriceTo(strPriceTo);
-        return  new YandexMarketStep(driver);
+        //return  new YandexMarketStep(driver);
     }
     public  void  checkProducer(){
         yandexMarketPage.clickHP();
@@ -94,56 +93,61 @@ public class YandexMarketStep extends BaseSetup {
         System.out.println("Difference = " + difference);
     }
 
-    public void getAndSortLaptops() throws InterruptedException {
-       // reloadPage();
-       // yandexMarketPage.showAllLaptops();
-        List<LaptopModel> laptopModels = new ArrayList<>();
-        Integer laptopListSize = driver.findElements(By.xpath("//div[@data-id]")).size();
-        for (int i = 1; i <= laptopListSize; i++) {
-            laptopModels.add(new LaptopModel(
-                    driver.findElement(By.xpath("//div[@data-id][" + i + "]/div[4]/div[1]/div[1]/a")).getText(),
-                    driver.findElement(By.xpath("//div[@data-id][" + i + "]/div[5]/div/div/div/div/a/div")).getText()
-            ));
-        }
-        laptopModels = laptopModels.stream().sorted(Comparator.comparing(LaptopModel::getName)).collect(Collectors.toList());
-        int index = 1;
-        for(LaptopModel laptop: laptopModels) {
-            System.out.println("[" + index + "] Name: " + laptop.getName());
-            index++;
-        }
-    }
 
-    public void getBatteryInfo() {
-        yandexMarketPage.clickFirstLaptopLink();
-        Map<String, String> specs = new HashMap<>();
-        laptopPage.goToSpecTab();
-        for(int i = 1; i <= laptopPage.getBatterySpecSize(); i++) {
-            Pair<String, String> specPart = laptopPage.getPartOfBatterySpec(i);
-            specs.put(specPart.getKey(), specPart.getValue());
+    //public void getBatteryInfo() {
+      //  yandexMarketPage.clickFirstLaptopLink();
+       // Map<String, String> specs = new HashMap<>();
+       // laptopPage.goToSpecTab();
+       // for (int i = 1; i <= laptopPage.getBatterySpecSize(); i++) {
+         //   Pair<String, String> specPart = laptopPage.getPartOfBatterySpec(i);
+          //  specs.put(specPart.getKey(), specPart.getValue());
+        //}
+        //LaptopBatteryModel battery = new LaptopBatteryModel(specs);
+       // System.out.println();
+    //}
+        public void getAndSortLaptops()  {
+            // reloadPage();
+            // yandexMarketPage.showAllLaptops();
+            List<LaptopModel> laptopModels = new ArrayList<>();
+            Integer laptopListSize = driver.findElements(By.xpath("//div[@data-id]")).size();
+            for (int i = 1; i <= laptopListSize; i++) {
+                laptopModels.add(new LaptopModel(
+                        driver.findElement(By.xpath("//div[@data-id][" + i + "]/div[4]/div[1]/div[1]/a")).getText(),
+                        driver.findElement(By.xpath("//div[@data-id][" + i + "]/div[5]/div/div/div/div/a/div")).getText()
+                ));
+            }
+            laptopModels = laptopModels.stream().sorted(Comparator.comparing(LaptopModel::getName)).collect(Collectors.toList());
+            int index = 1;
+            for(LaptopModel laptop: laptopModels) {
+                System.out.println("[" + index + "] Name: " + laptop.getName());
+                index++;
+            }
         }
-        LaptopBatteryModel battery = new LaptopBatteryModel(specs);
-        System.out.println();
-    }
-    public void getbattetyASPIRE(){
-        driver.get("https://market.yandex.ru/product--noutbuk-acer-aspire-3-a315-21/1800488111/spec?track=tabs");
+
+
+
+    public void getBattery1(){
+        driver.get("https://market.yandex.ru/product--noutbuk-lenovo-v130-15/197642238?nid=54544");
+
+
         laptopPage.goToSpecTab();
+
         BatteryModel batteryModel = new BatteryModel(
+                driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[1]")).getText(),
+                driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[2]")).getText(),
+                driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[3]")).getText());
 
-        );
-
-
-
-
-
+        System.out.print("Выполнено");
     }
+
+
 
     public void printPopup() {
         laptopPage.printPopup();
     }
-
-
-
-
+    public void finishStep(){
+        System.out.print("Я молодец!!!");
+    }
 
 
 }

@@ -12,7 +12,7 @@ import org.testng.annotations.Parameters;
 public class BaseSetup {
 
     protected WebDriver driver;
-    static String driverPath = "C:\\Users\\Kate\\Downloads\\chromedriver_win32\\chromedriver.exe";
+    static String driverPath = "C:\\Users\\Tech\\Desktop\\chromedriver.exe";
 
     public WebDriver getDriver() {
         return driver;

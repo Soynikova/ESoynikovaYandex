@@ -1,6 +1,7 @@
 package Page;
 
 
+import model.BatteryModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
+import java.util.Base64;
 import java.util.List;
 
 
@@ -22,7 +24,7 @@ public class YandexMarketPage {
     }
 
 
-    @FindBy(xpath = "//html/body/div[1]/div/div[3]/noindex/div/div[4]/a")
+    @FindBy(xpath = "//div[@class='n-w-tab n-w-tab_interaction_hover-navigation-menu n-w-tab_type_navigation-menu i-bem n-w-tab_js_inited']//span[@class='n-w-tab__control-caption'][contains(text(),'Компьютерная техника')]")
     private WebElement CompTech;
     @FindBy(xpath = "//a[@class='_2qvOOvezty SvBTI5gwNn _2EJs7HYaZ4'][contains(text(),'Компьютеры')]")
     private WebElement Comp;
@@ -47,6 +49,11 @@ public class YandexMarketPage {
     @FindBy(xpath = "//div[contains(@class, 'n-filter-sorter_sort_desc')]")
     private List<WebElement> maxSortButton;
     @FindBy(xpath = "//div[@class='pager-more__button pager-loader_preload']")
+
+
+    public WebElement batteryTime;
+
+
     private WebElement showMoreButton;
 
 
@@ -120,6 +127,12 @@ public class YandexMarketPage {
         }
 
     }
+
+
+
+
+
+
 
 }
 

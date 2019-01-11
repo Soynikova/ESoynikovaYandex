@@ -29,19 +29,18 @@ public class YandexTest {
         yandexMarketStep.setPriceTo("18000");
         yandexMarketStep.checkProducer();
         yandexMarketStep.checkColor();
-        yandexMarketStep.waitLoadPage();
-        yandexMarketStep.getAndSortLaptops();
+      yandexMarketStep.waitLoadPage();
         yandexMarketStep.pringMinMaxAndDifference();
-        yandexMarketStep.getBatteryInfo();
-        yandexMarketStep.printPopup();
-    }
-    @Test
-    public void baterryLaptopTest()
-    {
-        driver.get("https://market.yandex.ru/product--noutbuk-acer-aspire-3-a315-21/1800488111/spec?track=tabs");
-
-
+        yandexMarketStep.getAndSortLaptops();
+        yandexMarketStep.getBattery1();
+        //yandexMarketStep.printPopup();
     }
 
+    @Feature("ujhj")
+    @Test(description = "jekfhkfjh")
+    public void testFinish()  {
+        yandexMarketStep.finishStep();
+    }
 
-}
+    }
+
