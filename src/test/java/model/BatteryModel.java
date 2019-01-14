@@ -2,12 +2,14 @@ package model;
 
 public class BatteryModel {
     private String batteryTime;
-
+    private String batterySize;
     private String batteryCellAmount;
     private String batteryType;
 
-    public BatteryModel(String batteryTime, String batteryCellAmount, String batteryType) {
+
+    public BatteryModel(String batteryTime,String batterySize, String batteryCellAmount, String batteryType) {
         this.batteryTime = batteryTime;
+        this.batteryTime = batterySize;
         this.batteryCellAmount = batteryCellAmount;
         this.batteryType = batteryType;
     }
@@ -20,7 +22,13 @@ public class BatteryModel {
         this.batteryTime = batteryTime;
     }
 
+    public String getBatterySize() {
+        return batteryTime;
+    }
 
+    public void setBatterySize(String batterySize) {
+        this.batteryTime = batterySize;
+    }
 
     public String getBatteryCellAmount() {
         return batteryCellAmount;

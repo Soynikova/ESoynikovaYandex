@@ -2,17 +2,22 @@ package base;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
+import static sun.plugin2.message.HeartbeatMessage.DEFAULT_TIMEOUT;
+
 public class BaseSetup {
 
     protected WebDriver driver;
-    static String driverPath = "C:\\Users\\Tech\\Desktop\\chromedriver.exe";
+    static String driverPath = "C:\\Users\\Kate\\Downloads\\chromedriver_win32\\chromedriver.exe";
 
     public WebDriver getDriver() {
         return driver;
@@ -37,6 +42,7 @@ public class BaseSetup {
         System.out.println("Launching google chrome with new profile..");
         System.setProperty("webdriver.chrome.driver", driverPath);
         WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
 
         return driver;
     }
@@ -59,6 +65,7 @@ public class BaseSetup {
         new WebDriverWait(driver, 2).until(
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
+
 
     public void reloadPage() {
         driver.navigate().refresh();

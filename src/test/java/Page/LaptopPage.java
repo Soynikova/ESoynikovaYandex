@@ -1,11 +1,13 @@
 package Page;
 
+import Step.YandexMarketStep;
 import javafx.util.Pair;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
+
 
 public class LaptopPage {
     private WebDriver driver;
@@ -39,7 +41,10 @@ public class LaptopPage {
     public void printPopup() {
         driver.findElement(By.xpath("//span[text()='Процессор']/div/span")).click();
         String content = driver.findElement(By.xpath("//div[contains(@class, 'popup_visibility_visible')]/descendant::*/div[@class='n-hint-button__article']")).getText();
-        System.out.println("Popup content: " + content);
+        System.out.println("Текст подсказки: " + content);
+
+
     }
+
 
 }

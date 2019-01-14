@@ -1,26 +1,35 @@
 package Page;
 
 
-import model.BatteryModel;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.google.common.base.Stopwatch;
+import jdk.internal.instrumentation.Logger;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
-import java.util.Base64;
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static sun.plugin2.message.HeartbeatMessage.DEFAULT_TIMEOUT;
 
 
 @Test
-public class YandexMarketPage {
+public class YandexMarketPage  {
 
-    private WebDriver driver;
+
+    private  WebDriver driver;
 
     public YandexMarketPage(WebDriver driver) {
         HtmlElementLoader.populatePageObject(this, driver);
         this.driver = driver;
+
+
     }
 
 
@@ -49,70 +58,85 @@ public class YandexMarketPage {
     @FindBy(xpath = "//div[contains(@class, 'n-filter-sorter_sort_desc')]")
     private List<WebElement> maxSortButton;
     @FindBy(xpath = "//div[@class='pager-more__button pager-loader_preload']")
-
-
-    public WebElement batteryTime;
-
-
     private WebElement showMoreButton;
 
 
-    public void clickCompTech() {
 
 
-        CompTech.click();
+    public  Wait<WebDriver> checkIsElementVisible(WebElement webElement){
+        Wait<WebDriver> wait = new WebDriverWait(driver, 5).withMessage("Element was not found");
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+        return wait ;
+
+
+    }
+
+     public  WebElement checkIsElementClickable(WebElement webElement){
+         checkIsElementVisible(webElement).until(ExpectedConditions.elementToBeClickable(webElement));
+         return webElement;
+     }
+
+    public  void  clickCompTech() {
+        checkIsElementClickable(CompTech).click();
+
     }
 
     public void clickComp() {
 
-        Comp.click();
+        checkIsElementClickable(Comp).click();
     }
 
     public void clickLaptop() {
 
-        Laptop.click();
+        checkIsElementClickable(Laptop).click();
     }
 
     public void setPriceTo(String strPriceTo) {
+        checkIsElementVisible(PriceTo);
         PriceTo.sendKeys(strPriceTo);
 
     }
 
     public void clickHP() {
-        HP.click();
+
+        checkIsElementClickable(HP).click();
     }
 
     public void minSort() {
+
         if(minSortButton.size() > 0){
             return;
         }
-        sortButton.click();
+        checkIsElementClickable(sortButton).click();
     }
 
     public void maxSort() {
+
         if(maxSortButton.size() > 0){
             return;
         }
-        sortButton.click();
+        checkIsElementClickable(sortButton).click();
+
     }
 
     public void clickLenovo() {
-        Lenovo.click();
+
+        checkIsElementClickable(Lenovo).click();
     }
 
     public void clickBlackColor() {
-        if (BlackColor.isDisplayed() || BlackColor.isEnabled())
-            BlackColor.click();
+
+            checkIsElementClickable(BlackColor).click();
     }
 
     public void clickWhiteColor() {
-        if (WhiteColor.isEnabled() || WhiteColor.isDisplayed())
-            WhiteColor.click();
+
+       checkIsElementClickable(WhiteColor).click();
     }
 
     public void clickFirstLaptopLink() {
-        if (WhiteColor.isEnabled() || WhiteColor.isDisplayed())
-        firstLaptopLink.click();
+
+        checkIsElementClickable(firstLaptopLink).click();
     }
 
     public void showAllLaptops() throws InterruptedException {
@@ -127,12 +151,6 @@ public class YandexMarketPage {
         }
 
     }
-
-
-
-
-
-
 
 }
 

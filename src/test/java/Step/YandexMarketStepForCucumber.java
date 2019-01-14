@@ -3,83 +3,85 @@ package Step;
 import Page.LaptopPage;
 import Page.YandexMarketPage;
 import base.BaseSetup;
-import cucumber.api.java.ast.Ya;
-import io.qameta.allure.Step;
+import cucumber.api.java.ru.Когда;
+import cucumber.api.java.ru.То;
+import cucumber.api.java.ru.Тогда;
 import javafx.util.Pair;
 import model.BatteryModel;
-import model.LaptopBatteryModel;
 import model.LaptopModel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-public class YandexMarketStep extends BaseSetup {
+public class YandexMarketStepForCucumber extends BaseSetup {
 
+
+    YandexMarketStep yandexMarketStep;
     YandexMarketPage yandexMarketPage;
     LaptopPage laptopPage;
 
-    public YandexMarketStep(String browserType,String url) {
-        initializeTest(browserType);
+    public YandexMarketStepForCucumber() {
+        initializeTest("chrome");
         yandexMarketPage = new YandexMarketPage(driver);
         laptopPage = new LaptopPage(driver);
-        driver.manage().window().maximize();
-        driver.navigate().to(url);
+        HtmlElementLoader.populatePageObject(this, driver);
+
     }
 
-    @Step("Перейти в раздел ноутбуки")
-    public YandexMarketStep goToLaptop() {
-        yandexMarketPage.clickCompTech();
+
+    @Тогда("^Перейти в раздел ноутбуки$")
+    public void перейти_в_раздел_ноутбуки() {
+        driver.navigate().to("https://market.yandex.ru/");
+        yandexMarketPage.clickCompTech();//
         yandexMarketPage.clickComp();
         yandexMarketPage.clickLaptop();
-        return  this;
 
     }
 
-    @Step("Ввести цену до")
-    public YandexMarketStep setPriceTo(String strPriceTo){
+    @Тогда("Задать цену до (.*)")
+    public void задать_цену_до(String strPriceTo) {
         yandexMarketPage.setPriceTo(strPriceTo);
-        //return  new YandexMarketStep(driver);
-        return  this;
+
     }
-    @Step("Выбрать производителя")
-    public  YandexMarketStep  checkProducer(){
+
+    @Тогда("^Выбрать производителя$")
+    public void выбрать_производителя() {
         yandexMarketPage.clickHP();
         yandexMarketPage.clickLenovo();
-        return  this;
     }
-    @Step("Выбрать цвет")
-    public YandexMarketStep checkColor(){
+
+    @Тогда("^Выбрать цвет$")
+    public void выбрать_цвет() {
         yandexMarketPage.clickBlackColor();
         yandexMarketPage.clickWhiteColor();
-        return  this;
-
     }
-
     public Pair<String, String> getLaptopWithMinPrice() {
         yandexMarketPage.minSort();
-        reloadPage();
+        //reloadPage();
         Pair<String, String> result = new Pair<>(
                 driver.findElement(By.xpath("//div[@data-id][1]/descendant::div[@class='n-snippet-card2__title']/a")).getText(),
                 driver.findElement(By.xpath("//div[@data-id][1]/descendant::div[@class='price']")).getText()
         );
         System.out.println();
-        System.out.println("Laptop with min prise:");
-        System.out.println("Name: " + result.getKey());
-        System.out.println("Price: " + result.getValue());
+        System.out.println("Самый дешевый ноутбук:");
+        System.out.println("Название: " + result.getKey());
+        System.out.println("Цена: " + result.getValue());
         System.out.println();
         return result;
     }
 
     public Pair<String, String> getLaptopWithMaxPrice() {
         yandexMarketPage.maxSort();
-        reloadPage();
+        //reloadPage();
         Pair<String, String> result = new Pair<>(
                 driver.findElement(By.xpath("//div[@data-id][1]/descendant::div[@class='n-snippet-card2__title']/a")).getText(),
                 driver.findElement(By.xpath("//div[@data-id][1]/descendant::div[@class='price']")).getText()
@@ -91,13 +93,14 @@ public class YandexMarketStep extends BaseSetup {
         System.out.println();
         return result;
     }
-   @Step("Вывести самый дешевый и самый дорогой ноутбук и разницу в цене")
-    public YandexMarketStep  pringMinMaxAndDifference() {
+    @Тогда("^Вывести разницу$")
+
+    public void  вывести_разницу() {
         String minPrice = getLaptopWithMinPrice().getValue().replace(" ", "");
         String maxPrice = getLaptopWithMaxPrice().getValue().replace(" ", "");
         Integer difference = Integer.valueOf(maxPrice.substring(0, maxPrice.length()-1)) - Integer.valueOf(minPrice.substring(0, minPrice.length()-1));
-        System.out.println("Разница в цене= " + difference);
-        return  this;
+        System.out.println("Разница в цене = " + difference);
+
     }
 
 
@@ -112,8 +115,8 @@ public class YandexMarketStep extends BaseSetup {
     //LaptopBatteryModel battery = new LaptopBatteryModel(specs);
     // System.out.println();
     //}
-    @Step("Вывести отсортированный список ноутбуков по названию")
-    public YandexMarketStep getAndSortLaptops()  {
+    @Тогда("^Сортировка по названию$")
+    public void сортировка_по_имени() {
         // reloadPage();
         // yandexMarketPage.showAllLaptops();
         List<LaptopModel> laptopModels = new ArrayList<>();
@@ -126,15 +129,15 @@ public class YandexMarketStep extends BaseSetup {
         }
         laptopModels = laptopModels.stream().sorted(Comparator.comparing(LaptopModel::getName)).collect(Collectors.toList());
         int index = 1;
-        for(LaptopModel laptop: laptopModels) {
+        for (LaptopModel laptop : laptopModels) {
             System.out.println("[" + index + "] Название: " + laptop.getName());
             index++;
         }
-    return  this;}
 
+    }
 
-   @Step("Создать класс питание")
-    public YandexMarketStep getBattery() {
+    @Тогда("^Создать класс Питание$")
+    public void создать_класс_питание() {
         driver.get("https://market.yandex.ru/product--noutbuk-hp-stream-14-ax014ur-intel-celeron-n3060-1600-mhz-14-1366x768-2gb-32gb-emmc-dvd-net-intel-hd-graphics-400-wi-fi-bluetooth-windows-10-home/1863692401/spec?track=tabs&glfilter=14871214%3A14899090&priceto=18000");
         laptopPage.goToSpecTab();
         BatteryModel batteryModel = new BatteryModel(
@@ -142,22 +145,15 @@ public class YandexMarketStep extends BaseSetup {
                 driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[2]")).getText(),
                 driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[3]")).getText(),
                 driver.findElement(By.xpath("//div[@class='layout__col layout__col_size_p75 n-product-spec-wrap']/div[12]//dl[4]")).getText());
-        return  this;}
+    }
 
-    @Step("Вывести подсказку")
-    public YandexMarketStep printPopup() {
+    @Тогда("^Вывести подсказку$")
+    public void вывести_подсказку() {
         laptopPage.printPopup();
-        return  this;
     }
-    @Step("Задание выполнено")
-    public YandexMarketStep finishStep(){
-        System.out.print("Я молодец!!!");
-        return  this;
+    @Тогда("^Задание выполнено$")
+    public void задание_выполнено() {
+        System.out.print("Все сделала! Я молодец");
+
     }
-
-    public YandexMarketPage getYandexMarketPage() {
-        return yandexMarketPage;
-    }
-
-
 }
